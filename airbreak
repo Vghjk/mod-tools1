@@ -1,5 +1,6 @@
 local dlstatus = require('moonloader').download_status
 local lanes = require('lanes').configure()
+local encoding = require 'encoding'
 encoding.default = 'CP1251'
 u8 = encoding.UTF8
 
