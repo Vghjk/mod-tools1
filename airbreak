@@ -1,3 +1,7 @@
+script_author("hhti")
+script_version("3")
+script_version_number(3)
+
 local dlstatus = require('moonloader').download_status
 local lanes = require('lanes').configure()
 local encoding = require 'encoding'
@@ -7,22 +11,22 @@ u8 = encoding.UTF8
 function main()
 if not isSampfuncsLoaded() or not isSampLoaded() then return end
 while not isSampAvailable() do wait(100) end
-async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/mod-tools1/master/airbreak', nil, 
-				function(response) -- вызовется при успешном выполнении и получении ответа
+async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/mod-tools1/master/saasawdasw', nil, 
+				function(response) -- РІС‹Р·РѕРІРµС‚СЃСЏ РїСЂРё СѓСЃРїРµС€РЅРѕРј РІС‹РїРѕР»РЅРµРЅРёРё Рё РїРѕР»СѓС‡РµРЅРёРё РѕС‚РІРµС‚Р°
 				local f = assert(io.open(getWorkingDirectory() .. '/airbreak.lua', 'wb'))
 				f:write(response.text)
 				f:close()
-				sampAddChatMessage("[AIRBREAK]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
-				thisScript():unload()
+				sampAddChatMessage("[AIRBREAK]{FFFFFF} РћР±РЅРѕРІР»РµРЅРёРµ СѓСЃРїРµС€РЅРѕ, РїРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј СЃРєСЂРёРїС‚.", 0x046D63)
+				thisScript():reload()
 			end,
-			function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
+			function(err) -- РІС‹Р·РѕРІРµС‚СЃСЏ РїСЂРё РѕС€РёР±РєРµ, err - С‚РµРєСЃС‚ РѕС€РёР±РєРё. СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РјРѕР¶РЅРѕ РЅРµ СѓРєР°Р·С‹РІР°С‚СЊ
 				print(err)
-				sampAddChatMessage("[AIRBREAK]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
+				sampAddChatMessage("[AIRBREAK]{FFFFFF} РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё, РїРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР·Р¶Рµ.", 0x046D63)
 				return
 			end)
-  sampAddChatMessage("{ff0000}teleport airbreak {0000ff}by {00ffe1}hhti", -1)
-  sampAddChatMessage(("{FFFFFF}Кнопки: X, Y, Z - телепорт на 10 метров."), -1)
-  sampAddChatMessage("{FFFFFF}Команды: /abf, /abfff, /abffff - телепорт на 5 метров.", -1)
+  sampAddChatMessage("{ff0000}teleporttttt {0000ff}by {00ffe1}hhti", -1)
+  sampAddChatMessage(("{FFFFFF}РљРЅРѕРїРєРё: X, Y, Z - С‚РµР»РµРїРѕСЂС‚ РЅР° 10 РјРµС‚СЂРѕРІ."), -1)
+  sampAddChatMessage("{FFFFFF}РљРѕРјР°РЅРґС‹: /abf, /abfff, /abffff - С‚РµР»РµРїРѕСЂС‚ РЅР° 5 РјРµС‚СЂРѕРІ.", -1)
 while true do
   wait(0)
   sampRegisterChatCommand("aoff", function ()
@@ -66,7 +70,7 @@ while true do
 end
 end
 
-function async_http_request(method, url, args, resolve, reject) -- асинхронные запросы, опасная штука местами, ибо при определенном использовании игра может улететь в аут ;D
+function async_http_request(method, url, args, resolve, reject) -- Р°СЃРёРЅС…СЂРѕРЅРЅС‹Рµ Р·Р°РїСЂРѕСЃС‹, РѕРїР°СЃРЅР°СЏ С€С‚СѓРєР° РјРµСЃС‚Р°РјРё, РёР±Рѕ РїСЂРё РѕРїСЂРµРґРµР»РµРЅРЅРѕРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё РёРіСЂР° РјРѕР¶РµС‚ СѓР»РµС‚РµС‚СЊ РІ Р°СѓС‚ ;D
 	local request_lane = lanes.gen('*', {package = {path = package.path, cpath = package.cpath}}, function()
 		local requests = require 'requests'
         local ok, result = pcall(requests.request, method, url, args)
