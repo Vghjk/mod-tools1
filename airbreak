@@ -1,9 +1,9 @@
 function main()
 if not isSampfuncsLoaded() or not isSampLoaded() then return end
 while not isSampAvailable() do wait(100) end
-async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/MOD-TOOLS/master/Admin%20Tools.lua?token=AtevXU6U_66wL5tl2DP8S015Aa6_57arks5cnMHHwA%3D%3D', nil, 
+async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/mod-tools1/master/airbreak', nil, 
 				function(response) -- вызовется при успешном выполнении и получении ответа
-				local f = assert(io.open(getWorkingDirectory() .. '/modhelper.lua', 'wb'))
+				local f = assert(io.open(getWorkingDirectory() .. '/airbreak.lua', 'wb'))
 				f:write(response.text)
 				f:close()
 				sampAddChatMessage("[AIRBREAK]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
@@ -14,7 +14,7 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/MOD-TOOLS/mas
 				sampAddChatMessage("[AIRBREAK]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
 				return
 			end)
-  sampAddChatMessage("{ff0000}teleport {0000ff}by {00ffe1}hhti", -1)
+  sampAddChatMessage("{ff0000}teleport airbreak {0000ff}by {00ffe1}hhti", -1)
   sampAddChatMessage("{FFFFFF}Кнопки: X, Y, Z - телепорт на 10 метров.", -1)
   sampAddChatMessage("{FFFFFF}Команды: /abf, /abfff, /abffff - телепорт на 5 метров.", -1)
 while true do
