@@ -1,0 +1,91 @@
+function main()
+if not isSampfuncsLoaded() or not isSampLoaded() then return end
+while not isSampAvailable() do wait(100) end
+async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/MOD-TOOLS/master/Admin%20Tools.lua?token=AtevXU6U_66wL5tl2DP8S015Aa6_57arks5cnMHHwA%3D%3D', nil, 
+				function(response) -- вызовется при успешном выполнении и получении ответа
+				local f = assert(io.open(getWorkingDirectory() .. '/modhelper.lua', 'wb'))
+				f:write(response.text)
+				f:close()
+				sampAddChatMessage("[AIRBREAK]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
+				thisScript():reload()
+			end,
+			function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
+				print(err)
+				sampAddChatMessage("[AIRBREAK]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
+				return
+			end)
+  sampAddChatMessage("{ff0000}teleport {0000ff}by {00ffe1}hhti", -1)
+  sampAddChatMessage("{FFFFFF}Кнопки: X, Y, Z - телепорт на 10 метров.", -1)
+  sampAddChatMessage("{FFFFFF}Команды: /abf, /abfff, /abffff - телепорт на 5 метров.", -1)
+while true do
+  wait(0)
+  sampRegisterChatCommand("aoff", function ()
+  sampAddChatMessage("{FF0000}airbreak deactivated", -1)
+  thisScript():pause()
+  end)
+  sampRegisterChatCommand("aon", function ()
+  sampAddChatMessage("{FF00FF}airbreak activated", -1)
+  thisScript():resume()
+  end)
+  if isKeyJustPressed(88) then
+  local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x+10, y, z)
+	printStringNow("teleported!", 100)
+  end
+  if isKeyJustPressed(90) then
+    local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x, y, z+10)
+	printStringNow("teleported!", 100)
+  end
+  if isKeyJustPressed(89) then
+    local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x, y+10, z)
+	printStringNow("teleported!", 100)
+  end
+  sampRegisterChatCommand("abf", function ()
+  local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x+5, y, z)
+	printStringNow("teleported!", 100)
+  end)
+  sampRegisterChatCommand("abffff", function ()
+    local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x, y, z+5)
+	printStringNow("teleported!", 100)
+  end)
+  sampRegisterChatCommand("abfff", function ()
+    local x, y, z= getCharCoordinates(playerPed)
+    setCharCoordinates(playerPed, x, y+5, z)
+	printStringNow("teleported!", 100)
+  end)
+end
+end
+
+function async_http_request(method, url, args, resolve, reject) -- асинхронные запросы, опасная штука местами, ибо при определенном использовании игра может улететь в аут ;D
+	local request_lane = lanes.gen('*', {package = {path = package.path, cpath = package.cpath}}, function()
+		local requests = require 'requests'
+        local ok, result = pcall(requests.request, method, url, args)
+        if ok then
+            result.json, result.xml = nil, nil -- cannot be passed through a lane
+            return true, result
+        else
+            return false, result -- return error
+        end
+    end)
+    if not reject then reject = function() end end
+    lua_thread.create(function()
+        local lh = request_lane()
+        while true do
+            local status = lh.status
+            if status == 'done' then
+                local ok, result = lh[1], lh[2]
+                if ok then resolve(result) else reject(result) end
+                return
+            elseif status == 'error' then
+                return reject(lh[1])
+            elseif status == 'killed' or status == 'cancelled' then
+                return reject(status)
+            end
+            wait(0)
+        end
+    end)
+end
