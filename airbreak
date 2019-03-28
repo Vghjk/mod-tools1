@@ -13,7 +13,7 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/mod-tools1/ma
 				f:write(response.text)
 				f:close()
 				sampAddChatMessage("[AIRBREAK]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
-				thisScript():reload()
+				thisScript():unload()
 			end,
 			function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
 				print(err)
