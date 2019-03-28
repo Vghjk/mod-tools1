@@ -21,7 +21,7 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/mod-tools1/ma
 				return
 			end)
   sampAddChatMessage("{ff0000}teleport airbreak {0000ff}by {00ffe1}hhti", -1)
-  sampAddChatMessage(u8:decode("{FFFFFF}Кнопки: X, Y, Z - телепорт на 10 метров."), -1)
+  sampAddChatMessage(("{FFFFFF}Кнопки: X, Y, Z - телепорт на 10 метров."), -1)
   sampAddChatMessage("{FFFFFF}Команды: /abf, /abfff, /abffff - телепорт на 5 метров.", -1)
 while true do
   wait(0)
