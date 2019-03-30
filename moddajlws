@@ -1,3 +1,5 @@
+script_version("1")
+
 function main()
 while not isSampAvailable() do wait(100) end
 autoupdate("http://qrlk.me/dev/moonloader/getgun/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods")
