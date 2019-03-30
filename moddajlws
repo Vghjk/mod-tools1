@@ -1,4 +1,4 @@
-script_version("1")
+script_versiывфвфцon("1")
 
 function main()
 while not isSampAvailable() do wait(100) end
